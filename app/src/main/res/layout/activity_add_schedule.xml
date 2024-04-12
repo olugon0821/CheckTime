@@ -8,6 +8,14 @@
     tools:context=".AddSchedule">
 
     <EditText
+        android:id="@+id/titleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="일정 제목"
+        android:inputType="text"
+        android:layout_margin="16dp"/>
+
+    <EditText
         android:id="@+id/EditTextdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,9 +45,9 @@
     <ListView
         android:id="@+id/itemListView"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="190dp"
         android:layout_below="@id/addButton"
-        android:layout_margin="16dp"/>
+        />
 
     <Button
         android:id="@+id/saveButton"
