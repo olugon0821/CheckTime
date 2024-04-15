@@ -9,42 +9,37 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class ScheduleListActivity extends AppCompatActivity {
-    private String categoryName;
     private DBHelper dbHelper;
     private ArrayList<ScheduleItem> scheduleList;
     private ScheduleAdapter adapter;
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedulelistview);
 
+        // DBHelper 초기화
+        dbHelper = new DBHelper(this);
+
+        // 일정 리스트 초기화 및 불러오기
+        scheduleList = new ArrayList<>();
+        refreshSchedules();
+
         // 저장 버튼 클릭 시 일정 추가 액티비티로 이동
-        Button button = findViewById(R.id.Addschedulebutton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button addButton = findViewById(R.id.Addschedulebutton);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScheduleListActivity.this, AddSchedule.class);
                 startActivity(intent);
             }
         });
-
-        // DBHelper 초기화
-        dbHelper = new DBHelper(this);
-
-        // 이전 액티비티에서 전달한 카테고리 이름 받기
-        Intent intent = getIntent();
-        categoryName = intent.getStringExtra("category_name");
-
-        // 일정 리스트 초기화 및 불러오기
-        scheduleList = new ArrayList<>();
-        refreshSchedules();
     }
 
     // 일정을 새로고침하는 메서드
@@ -108,13 +103,8 @@ public class ScheduleListActivity extends AppCompatActivity {
     private void loadSchedules() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] projection = {DBHelper.COLUMN_SCHEDULE_ID, DBHelper.COLUMN_SCHEDULE_NAME, DBHelper.COLUMN_SCHEDULE_DATE};
-        // 카테고리 ID 필터링 조건 제거
-        //String selection = DBHelper.COLUMN_SCHEDULE_CATEGORY_ID + "=?";
-        //String[] selectionArgs = {String.valueOf(getCategoryId(categoryName))};
-        // 전체 스케줄을 가져오기 위해 selection 및 selectionArgs 삭제
         Cursor cursor = db.query(DBHelper.TABLE_SCHEDULES, projection, null, null, null, null, null);
 
-        // 일정이 없는 경우를 처리하기 위해 빈 리스트를 생성하여 어댑터에 설정
         if (cursor.getCount() == 0) {
             cursor.close();
             return;
@@ -132,14 +122,11 @@ public class ScheduleListActivity extends AppCompatActivity {
 
     // 항목을 리스트와 DB에서 삭제하는 메소드
     private void removeItem(ScheduleItem itemToRemove) {
-        // 데이터베이스에서 해당 항목을 삭제
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = DBHelper.COLUMN_SCHEDULE_ID + "=?";
         String[] selectionArgs = {String.valueOf(itemToRemove.getId())};
         db.delete(DBHelper.TABLE_SCHEDULES, selection, selectionArgs);
-        // 리스트에서 해당 항목을 삭제
         scheduleList.remove(itemToRemove);
-        // 어댑터에게 데이터가 변경되었음을 알림
         adapter.notifyDataSetChanged();
     }
 }

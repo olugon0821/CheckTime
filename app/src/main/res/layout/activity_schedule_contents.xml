@@ -1,60 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="일정"
-        android:textSize="15dp"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:layout_marginTop="5dp"
-        android:id="@+id/textViewscheduletitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Title"
-        android:textSize="25dp"/>
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="일자"
-        android:textSize="15dp"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:layout_marginTop="5dp"
-        android:id="@+id/textViewscheduledate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Date"
-        android:textSize="25dp"
-        android:gravity="center"/>
-
-    <TextView
-        android:layout_marginTop="35dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="챙길 물건 리스트"
-        android:textSize="15dp"
-        android:gravity="center"
-        />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/checkboxContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    </LinearLayout>
 
-</LinearLayout>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일정"
+            android:textSize="15dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textViewscheduletitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Title"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일자"
+            android:textSize="15dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textViewscheduledate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="25dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알람 설정"
+            android:gravity="center"
+            android:textSize="15dp"/>
+
+        <Switch
+            android:id="@+id/switchAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"/>
+
+        <TextView
+            android:layout_marginTop="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="챙길 물건 리스트"
+            android:textSize="15dp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/checkboxContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+        <!-- DatePicker -->
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>
