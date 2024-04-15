@@ -1,59 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/main"
-    android:orientation="vertical"
-    tools:context=".AddSchedule">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/titleEditText"
+    <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="일정 제목"
-        android:inputType="text"
-        android:layout_margin="16dp"/>
+        android:orientation="vertical"
+        tools:context=".AddSchedule">
 
-    <EditText
-        android:id="@+id/EditTextdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="날짜 선택"
-        android:inputType="none"
-        android:layout_margin="16dp"/>
+        <EditText
+            android:id="@+id/titleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="일정 제목"
+            android:inputType="text"
+            android:layout_margin="16dp"/>
 
-    <EditText
-        android:id="@+id/itemEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="필요한 물건 추가"
-        android:inputType="text"
-        android:layout_below="@id/EditTextdate"
-        android:layout_margin="16dp"/>
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="날짜 선택"
+            android:layout_margin="16dp"/>
 
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="추가"
-        android:layout_below="@id/itemEditText"
-        android:layout_alignParentEnd="true"
-        />
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:showWeekNumber="false"/>
 
-    <ListView
-        android:id="@+id/itemListView"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:layout_below="@id/addButton"
-        />
+        <EditText
+            android:id="@+id/itemEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="필요한 물건 추가"
+            android:inputType="text"
+            android:layout_margin="16dp"/>
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="저장"
-        android:layout_below="@id/itemListView"
-        android:layout_margin="16dp"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="추가"
+            android:layout_margin="16dp" />
+
+        <ListView
+            android:id="@+id/itemListView"
+            android:layout_width="match_parent"
+            android:layout_height="190dp" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:layout_margin="16dp"/>
+    </LinearLayout>
+</ScrollView>

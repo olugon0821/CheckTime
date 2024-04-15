@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "CategorySchedule.db";
     private static final int DATABASE_VERSION = 1;
@@ -21,7 +23,10 @@ public class DBHelper extends SQLiteOpenHelper {
     // Column names for schedules table
     public static final String COLUMN_SCHEDULE_ID = "schedule_id";
     public static final String COLUMN_SCHEDULE_NAME = "schedule_name";
-    public static final String COLUMN_SCHEDULE_CATEGORY_ID = "category_id"; // Foreign key to categories table
+    public static final String COLUMN_SCHEDULE_CATEGORY_ID = "category_id";
+    public static final String COLUMN_SCHEDULE_DATE = "schedule_date";
+    public static final String COLUMN_SCHEDULE_ITEM = "schedule_item";
+    public static final String COLUMN_SCHEDULE_CHECKED = "schedule_checked";
 
     // SQL statement to create categories table
     private static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE " + TABLE_CATEGORIES + "("
@@ -32,7 +37,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_SCHEDULES = "CREATE TABLE " + TABLE_SCHEDULES + "("
             + COLUMN_SCHEDULE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_SCHEDULE_NAME + " TEXT,"
+            + COLUMN_SCHEDULE_DATE + " TEXT,"
+            + COLUMN_SCHEDULE_ITEM + " TEXT,"
             + COLUMN_SCHEDULE_CATEGORY_ID + " INTEGER,"
+            + COLUMN_SCHEDULE_CHECKED + " INTEGER DEFAULT 0," // Add a comma here
             + " FOREIGN KEY (" + COLUMN_SCHEDULE_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_CATEGORY_ID + "))";
 
     public DBHelper(Context context) {
@@ -103,5 +111,24 @@ public class DBHelper extends SQLiteOpenHelper {
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
+    }
+    public long insertSchedule(ContentValues values, ArrayList<String> itemsList, ArrayList<Boolean> itemCheckedList) {
+        SQLiteDatabase db = getWritableDatabase();
+        StringBuilder itemsStringBuilder = new StringBuilder();
+        for (String item : itemsList) {
+            itemsStringBuilder.append(item).append(", ");
+        }
+        String itemsString = itemsStringBuilder.toString().trim();
+        values.put(COLUMN_SCHEDULE_ITEM, itemsString); // 아이템 문자열을 컬럼에 추가
+        return db.insert(TABLE_SCHEDULES, null, values);
+    }
+
+    public void updateCheckboxStatus(int scheduleId, String itemName, boolean checked) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SCHEDULE_CHECKED, checked ? 1 : 0);
+        String selection = COLUMN_SCHEDULE_ID + "=? AND " + COLUMN_SCHEDULE_ITEM + "=?";
+        String[] selectionArgs = {String.valueOf(scheduleId), itemName};
+        db.update(TABLE_SCHEDULES, values, selection, selectionArgs);
     }
 }
